@@ -66,13 +66,17 @@ Node::Node(GraphWidget *graphWidget)
     setFlag(ItemIsMovable);
     setFlag(ItemSendsGeometryChanges);
     setCacheMode(DeviceCoordinateCache);
-    //setZValue(-1);
+    setZValue(-1);
+	setFlag(ItemIsSelectable);
+	
 
 	//childItems().push_back(QGraphicsTextItem());
-	auto newText= new QGraphicsTextItem(nodeTitle,this);
-	newText->setTextInteractionFlags(Qt::TextEditorInteraction);
-	newText->setPos(-nodeWidth/2,-nodeHeight/2);
-	newText->setTextWidth(nodeWidth - 5);
+	nodeText= new QGraphicsTextItem(nodeTitle,this);
+	//newText->setTextInteractionFlags(Qt::TextEditorInteraction);
+	nodeText->setTextInteractionFlags(Qt::NoTextInteraction);
+	nodeText->setPos(-nodeWidth/2,-nodeHeight/2);
+	nodeText->setTextWidth(nodeWidth - 5);
+	nodeText->setFlag(QGraphicsItem::ItemIsFocusable);
 }
 //! [0]
 
@@ -176,10 +180,19 @@ QPainterPath Node::shape() const
 //! [10]
 void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *)
 {
-    painter->setPen(QPen(Qt::black,0.5));
-	//painter->setPen(QPen(Qt::gray, 0.5));
-    painter->setBrush(QColor(50, 103, 153));
-    //painter->drawEllipse(-7, -7, 20, 20);
+	if (isSelected())
+	{
+		painter->setPen(QPen(Qt::black, 0.5));
+		painter->setBrush(QColor(39, 184, 231));
+	}
+	else
+	{
+		painter->setPen(QPen(Qt::black,0.5));
+		//painter->setPen(QPen(Qt::gray, 0.5));
+		painter->setBrush(QColor(50, 103, 153));
+		//painter->drawEllipse(-7, -7, 20, 20);
+	}
+    
 
 	QRectF showedRect(-nodeWidth / 2, -nodeHeight / 2, nodeWidth, nodeHeight);
 
@@ -221,6 +234,19 @@ QVariant Node::itemChange(GraphicsItemChange change, const QVariant &value)
             edge->adjust();
         graph->itemMoved();
         break;
+		
+	case QGraphicsItem::ItemSelectedChange:
+		if (!isSelected())//change from unselected to selected
+		{
+			nodeText->setTextInteractionFlags(Qt::TextEditorInteraction);
+		}
+		else//from selected to unselected
+		{
+			nodeText->setTextInteractionFlags(Qt::NoTextInteraction);
+		}
+
+		break;
+
     default:
         break;
     };

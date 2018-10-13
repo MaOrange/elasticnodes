@@ -91,10 +91,14 @@ private:
     QPointF newPos;
     GraphWidget *graph;
 
+	QGraphicsTextItem* nodeText;
+
 	QString nodeTitle="新指标";
 
 	qreal nodeWidth=50;
 	qreal nodeHeight=20;
+
+	//bool isSelected=false;
 
 	//qreal weight = -1;
 };
