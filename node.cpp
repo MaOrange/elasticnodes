@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 **
 ** Copyright (C) 2016 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
@@ -48,6 +48,8 @@
 **
 ****************************************************************************/
 
+#pragma execution_character_set("utf-8") //Chinese text 
+
 #include "edge.h"
 #include "node.h"
 #include "graphwidget.h"
@@ -65,6 +67,8 @@ Node::Node(GraphWidget *graphWidget)
     setFlag(ItemSendsGeometryChanges);
     setCacheMode(DeviceCoordinateCache);
     //setZValue(-1);
+
+	
 }
 //! [0]
 
@@ -160,7 +164,7 @@ QRectF Node::boundingRect() const
 QPainterPath Node::shape() const
 {
     QPainterPath path;
-    path.addRoundedRect(QRectF(-16, -10, 32, 20), 3.0, 3.0);
+    path.addRoundedRect(QRectF(-nodeWidth/2, -nodeHeight/2, nodeWidth, nodeHeight), 3.0, 3.0);
     return path;
 }
 //! [9]
@@ -172,7 +176,10 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 	//painter->setPen(QPen(Qt::gray, 0.5));
     painter->setBrush(QColor(50, 103, 153));
     //painter->drawEllipse(-7, -7, 20, 20);
-	painter->drawRoundedRect(QRectF(-16,-10,32,20),5.0,5.0);
+
+	QRectF showedRect(-nodeWidth / 2, -nodeHeight / 2, nodeWidth, nodeHeight);
+
+	painter->drawRoundedRect(showedRect,5.0,5.0);
 
 	/*QRadialGradient gradient(-3, -3, 10);
 	if (option->state & QStyle::State_Sunken) {
@@ -190,6 +197,14 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     //painter->setPen(QPen(Qt::black, 0));
     //painter->drawEllipse(-10, -10, 20, 20);
 	//painter->drawRect(-10, -10, 20, 20);
+
+
+	//paint text
+	painter->setPen(Qt::black);
+	QFont font("Arial", 7);
+	font.setBold(true);
+	painter->setFont(font);
+	painter->drawText(showedRect.adjusted(4,4,-4,-4),Qt::AlignCenter,nodeTitle);
 }
 //! [10]
 
@@ -221,5 +236,9 @@ void Node::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     update();
     QGraphicsItem::mouseReleaseEvent(event);
+}
+void Node::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
+{
+	qDebug("You double clicked me!");
 }
 //! [12]

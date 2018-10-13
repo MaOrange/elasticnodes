@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 **
 ** Copyright (C) 2016 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
@@ -84,11 +84,19 @@ protected:
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+	void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)override;
 
 private:
     QList<Edge *> edgeList;
     QPointF newPos;
     GraphWidget *graph;
+
+	QString nodeTitle="新指标";
+
+	qreal nodeWidth=40;
+	qreal nodeHeight=20;
+
+	//qreal weight = -1;
 };
 //! [0]
 
