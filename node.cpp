@@ -68,7 +68,10 @@ Node::Node(GraphWidget *graphWidget)
     setCacheMode(DeviceCoordinateCache);
     //setZValue(-1);
 
-	
+	//childItems().push_back(QGraphicsTextItem());
+	auto newText= new QGraphicsTextItem(nodeTitle,this);
+	newText->setTextInteractionFlags(Qt::TextEditorInteraction);
+	newText->setPos(-nodeWidth/2,-nodeHeight/2);
 }
 //! [0]
 
@@ -179,7 +182,7 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 
 	QRectF showedRect(-nodeWidth / 2, -nodeHeight / 2, nodeWidth, nodeHeight);
 
-	painter->drawRoundedRect(showedRect,5.0,5.0);
+	painter->drawRoundedRect(showedRect, 5.0, 5.0);
 
 	/*QRadialGradient gradient(-3, -3, 10);
 	if (option->state & QStyle::State_Sunken) {
@@ -200,11 +203,11 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 
 
 	//paint text
-	painter->setPen(Qt::black);
+	/*painter->setPen(Qt::black);
 	QFont font("Arial", 7);
 	font.setBold(true);
 	painter->setFont(font);
-	painter->drawText(showedRect.adjusted(4,4,-4,-4),Qt::AlignCenter,nodeTitle);
+	painter->drawText(showedRect.adjusted(4,4,-4,-4),Qt::AlignCenter,nodeTitle);*/
 }
 //! [10]
 
