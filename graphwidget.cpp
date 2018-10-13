@@ -92,14 +92,14 @@ GraphWidget::GraphWidget(QWidget *parent)
     scene->addItem(node7);
     scene->addItem(node8);
     scene->addItem(node9);
-    scene->addItem(new Edge(node1, centerNode));
-    scene->addItem(new Edge(node2, centerNode));
-    scene->addItem(new Edge(node3, node1));
-    scene->addItem(new Edge(node4, node1));
-    scene->addItem(new Edge(node6, node2));
-    scene->addItem(new Edge(node7, node2));
-    scene->addItem(new Edge(node8, node2));
-	scene->addItem(new Edge(node9, node6));
+    scene->addItem(new Edge(centerNode,node1));
+    scene->addItem(new Edge(centerNode,node2));
+    scene->addItem(new Edge(node1, node3));
+    scene->addItem(new Edge(node1, node4));
+    scene->addItem(new Edge(node2, node6));
+    scene->addItem(new Edge(node2, node7));
+    scene->addItem(new Edge(node2, node8));
+	scene->addItem(new Edge(node6, node9));
 
     node1->setPos(-80, -40);
     node2->setPos(23, -43);
