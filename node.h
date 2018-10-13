@@ -93,7 +93,7 @@ private:
 
 	QString nodeTitle="新指标";
 
-	qreal nodeWidth=40;
+	qreal nodeWidth=50;
 	qreal nodeHeight=20;
 
 	//qreal weight = -1;

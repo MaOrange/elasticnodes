@@ -72,6 +72,7 @@ Node::Node(GraphWidget *graphWidget)
 	auto newText= new QGraphicsTextItem(nodeTitle,this);
 	newText->setTextInteractionFlags(Qt::TextEditorInteraction);
 	newText->setPos(-nodeWidth/2,-nodeHeight/2);
+	newText->setTextWidth(nodeWidth - 5);
 }
 //! [0]
 
@@ -159,7 +160,7 @@ bool Node::advance()
 QRectF Node::boundingRect() const
 {
     qreal adjust = 5;
-    return QRectF( -16 - adjust, -10 - adjust, 32 + 2*adjust, 20 + 2*adjust);
+    return QRectF( -nodeWidth/2 - adjust, -nodeHeight/2- adjust, nodeWidth + 2*adjust, nodeHeight + 2*adjust);
 }
 //! [8]
 
